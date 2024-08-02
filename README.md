@@ -1,2 +1,2 @@
 # RepTim
-R package for DNA replication timing analysis
+R package for fast and efficient DNA replication timing analysis
