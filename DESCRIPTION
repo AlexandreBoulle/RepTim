@@ -1,0 +1,14 @@
+Package: RepTim
+Title: Package for analyzing Replication Timing data  
+Version: 1.0.0
+Authors@R: 
+    person("Alexandre", "Boullé", , "alexandre.boulle@institutimagine.org", role = c("aut", "cre"),
+           comment = c(ORCID = "YOUR-ORCID-ID"))
+Description: This package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect modified regions. 
+             Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched.
+             It does also a Fisher's exact test to find transcription factors for wich more genes (targets) are found in the modified regions in comparison with non-modified regions.
+License: BSD-3-Clause
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.2.3
+Imports: stringr, stats, utils, annotate, enrichR
