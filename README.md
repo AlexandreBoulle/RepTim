@@ -5,7 +5,7 @@
 
 
 ## Presentation
-RepTim is an R package for fast (less than 2 minutes with test datasets) and efficient DNA replication timing analysis.
+RepTim is an R package for fast (< 2 minutes with test datasets) and efficient DNA replication timing analysis.
 
 The package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect modified regions. 
 Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched.
