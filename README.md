@@ -23,7 +23,7 @@ Open an R console or RStudio and use this code:
 
 ```
 load.install.package <- lapply(
-  c("devtools", "tftargets", "org.Hs.eg.db", "enrichR"),
+  c("devtools", "org.Hs.eg.db", "enrichR"),
   FUN = function(x) {
     if (!require(x, character.only = TRUE)) {
       install.packages(x, dependencies = TRUE)
@@ -31,6 +31,11 @@ load.install.package <- lapply(
     }
   }
 )
+
+if (!require("tftargets", character.only = TRUE)){
+  devtools::install_github("slowkow/tftargets")
+  library("tftargets", character.only = TRUE)
+}
 
 devtools::install_github("AlexandreBoulle/RepTim")
 ```
@@ -85,9 +90,9 @@ setwd("/your_path/")
 
 ### 3/8: Load input data (databases)
 
-For human (GRCh38.p13), you can load databases directly from the package.
+For human (GRCh38.p13), you can load databases directly from the package. \
 If you want use other genome version or genomes of other species, it is necessary to use your own databases:
-* A list of known transcription factors for a species
+* A list of known transcription factors (TF) for a species (don't write a header in the file)
 * A dataframe containing at least 4 columns: "Chromosome", "Gene_name", "Gene_start_bp" and "Gene_end_bp"
 * A dataframe containing 2 columns: "Chromosome" and "Seq_length"
 
@@ -96,7 +101,7 @@ If you want use other genome version or genomes of other species, it is necessar
 fpath.tf <- system.file("extdata", "Human_TF.txt", package = "RepTim")
 tf <- read.table(fpath.tf, header = FALSE, sep = "\t")[, 1]
 
-# Ensembl database : gene names with positions
+# Ensembl database: gene names with positions
 fpath.ensembldb <- system.file("extdata", "BioMart_Ensembl_Grch38p13_02092022.txt", package = "RepTim")
 ensembldb <- read.table(fpath.ensembldb, header = TRUE, sep = "\t")
 ensembldb.genetype <- ensembldb[ensembldb$Gene_type == "protein_coding", ]
@@ -107,6 +112,10 @@ size.chr.table <- read.table(fpath.chr, header = TRUE, sep = "\t")
 ```
 
 ### 4/8: Load input data (biological conditions = Replication Timing profiles)
+
+To load this data, you must have a "Bedgraph_files" folder in your directory. \
+This folder needs to contain bedgraph files with the same type of name ("condition.bedGraph" and "condition_Loess.bedGraph"). \
+Example: if condition = "54" so the file name are "54.bedGraph" and "54_Loess.bedGraph"
 
 ```
 # WT
@@ -161,6 +170,8 @@ cond2.loess <- cond.loess.NA.late
 ```
 
 ### 8/8: RepTim functions
+
+**NOTE**: Result folders are write directly in your directory.
 
 ```
 list.cond <- list(cond1.WT, cond2.WT, cond1.NA.early, cond2.NA.early, cond1.NA.late, cond2.NA.late)
