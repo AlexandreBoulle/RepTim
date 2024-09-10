@@ -7,9 +7,7 @@
 ## Presentation
 RepTim is an R package for fast (< 2 minutes with test datasets) and efficient DNA Replication Timing analysis.
 
-The package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect modified regions. 
-Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched.
-It does also a Fisher's exact test to find transcription factors for wich more targets (genes) are found in the modified regions in comparison with non-modified regions.
+<div align="justify"> The package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect modified regions. Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched. It does also a Fisher's exact test to find transcription factors for wich more targets (genes) are found in the modified regions in comparison with non-modified regions. </div>
 
 
 &nbsp;
@@ -22,19 +20,9 @@ It does also a Fisher's exact test to find transcription factors for wich more t
 Open an R console or RStudio and use this code:
 
 ```
-load.install.package <- lapply(
-  c("devtools", "org.Hs.eg.db", "enrichR"),
-  FUN = function(x) {
-    if (!require(x, character.only = TRUE)) {
-      install.packages(x, dependencies = TRUE)
-      library(x, character.only = TRUE)
-    }
-  }
-)
-
-if (!require("tftargets", character.only = TRUE)){
-  devtools::install_github("slowkow/tftargets")
-  library("tftargets", character.only = TRUE)
+if (!require("devtools", character.only = TRUE)){
+  install.packages("devtools", dependencies = TRUE)
+  library("devtools", character.only = TRUE)
 }
 
 devtools::install_github("AlexandreBoulle/RepTim")
@@ -75,6 +63,21 @@ install.packages("/your_path/RepTim-main.tar.gz", repo = NULL, type = "source")
 ### 1/8: Load libraries
 
 ```
+if (!require("enrichR", character.only = TRUE)){
+  install.packages("enrichR")
+  library("enrichR", character.only = TRUE)
+}
+
+if (!require("org.Hs.eg.db", character.only = TRUE)){
+  BiocManager::install("org.Hs.eg.db")
+  library("org.Hs.eg.db", character.only = TRUE)
+}
+
+if (!require("tftargets", character.only = TRUE)){
+  devtools::install_github("slowkow/tftargets")
+  library("tftargets", character.only = TRUE)
+}
+
 library(stringr)
 library(tftargets)
 library(org.Hs.eg.db)
