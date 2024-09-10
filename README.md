@@ -5,7 +5,7 @@
 
 
 ## Presentation
-RepTim is an R package for fast (< 2 minutes with test datasets) and efficient DNA replication timing analysis.
+RepTim is an R package for fast (< 2 minutes with test datasets) and efficient DNA Replication Timing analysis.
 
 The package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect modified regions. 
 Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched.
@@ -19,11 +19,11 @@ It does also a Fisher's exact test to find transcription factors for wich more t
 
 ### Installation with R commands
 
-Open an R console or RStudio and use this code :
+Open an R console or RStudio and use this code:
 
 ```
 load.install.package <- lapply(
-  c("devtools"),
+  c("devtools", "tftargets", "org.Hs.eg.db", "enrichR"),
   FUN = function(x) {
     if (!require(x, character.only = TRUE)) {
       install.packages(x, dependencies = TRUE)
@@ -38,14 +38,14 @@ devtools::install_github("AlexandreBoulle/RepTim")
 ### Installation from source code
 
 #### Linux / macOS installation
-Open a terminal and use these commands :
+Open a terminal and use these commands:
 
 ```
 git clone https://github.com/AlexandreBoulle/RepTim.git
 tar -czvf RepTim.tar.gz ./RepTim/
 ```
 
-Open an R console or RStudio and use this command :
+Open an R console or RStudio and use this command:
 
 ```
 install.packages("/your_path/Reptim.tar.gz", repo = NULL, type = "source")
@@ -55,7 +55,7 @@ install.packages("/your_path/Reptim.tar.gz", repo = NULL, type = "source")
 
 * Click on the green "Code" button (top right) and choose "Download ZIP"
 * Uncompress the folder and then compress it to ".tar.gz" using 7-Zip or another tool (compress to ".tar" and then compress ".tar" folder to ".gz")
-* Open an R console or RStudio and use this command :
+* Open an R console or RStudio and use this command:
 
 ```
 install.packages("/your_path/RepTim-main.tar.gz", repo = NULL, type = "source")
@@ -67,7 +67,7 @@ install.packages("/your_path/RepTim-main.tar.gz", repo = NULL, type = "source")
 
 ## Package using
 
-### 1/8 : Load libraries
+### 1/8: Load libraries
 
 ```
 library(stringr)
@@ -77,13 +77,19 @@ library(enrichR)
 library(RepTim)
 ```
 
-### 2/8 : Set a path to load bedgraph files and to write results
+### 2/8: Set a path to load bedgraph files and to write results
 
 ```
 setwd("/your_path/")
 ```
 
-### 3/8 : Load input data (databases)
+### 3/8: Load input data (databases)
+
+For human (GRCh38.p13), you can load databases directly from the package.
+If you want use other genome version or genomes of other species, it is necessary to use your own databases:
+* A list of known transcription factors for a species
+* A dataframe containing at least 4 columns: "Chromosome", "Gene_name", "Gene_start_bp" and "Gene_end_bp"
+* A dataframe containing 2 columns: "Chromosome" and "Seq_length"
 
 ```
 # List of human TF
@@ -100,7 +106,7 @@ fpath.chr <- system.file("extdata", "Human_chr_size.txt", package = "RepTim")
 size.chr.table <- read.table(fpath.chr, header = TRUE, sep = "\t")
 ```
 
-### 4/8 : Load input data (biological conditions = Replication Timing profiles)
+### 4/8: Load input data (biological conditions = Replication Timing profiles)
 
 ```
 # WT
@@ -122,7 +128,7 @@ cond2.NA.late <- load.data(name.experiment = "673")[[1]]
 cond2.loess.NA.late <- load.data(name.experiment = "673")[[2]]
 ```
 
-### 5/8 : Merge replicates
+### 5/8: Merge replicates
 
 ```
 # WT
@@ -136,7 +142,7 @@ cond.NA.late <- replicate.merging(list(cond1.NA.late, cond2.NA.late))
 cond.loess.NA.late <- replicate.merging(list(cond1.loess.NA.late, cond2.loess.NA.late))
 ```
 
-### 6/8 : Choose Thresholds
+### 6/8: Choose Thresholds
 
 ```
 pval <- 1e-3
@@ -145,7 +151,7 @@ per.dist.elong <- 10
 organism <- "org.Hs.eg"
 ```
 
-### 7/8 : Choose conditions to compare
+### 7/8: Choose conditions to compare
 
 ```
 cond1 <- cond.WT
@@ -154,7 +160,7 @@ cond1.loess <- cond.loess.WT
 cond2.loess <- cond.loess.NA.late
 ```
 
-### 8/8 : RepTim functions
+### 8/8: RepTim functions
 
 ```
 list.cond <- list(cond1.WT, cond2.WT, cond1.NA.early, cond2.NA.early, cond1.NA.late, cond2.NA.late)
