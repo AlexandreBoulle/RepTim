@@ -118,7 +118,7 @@ size.chr.table <- read.table(fpath.chr, header = TRUE, sep = "\t")
 
 To load this data, you must have a "Bedgraph_files" folder in your directory. \
 This folder needs to contain bedgraph files with the same type of name ("condition.bedGraph" and "condition_Loess.bedGraph"). \
-Example: if condition = "54" so the file name are "54.bedGraph" and "54_Loess.bedGraph"
+Example: if condition = "54" so the file names are "54.bedGraph" and "54_Loess.bedGraph"
 
 ```
 # WT
