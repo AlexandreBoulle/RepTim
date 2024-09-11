@@ -94,7 +94,7 @@ setwd("/your_path/")
 ### 3/8: Load input data (databases)
 
 For human (GRCh38.p13), you can load databases directly from the package. \
-If you want use other genome version or genomes of other species, it is necessary to use your own databases:
+If you need another genome version or genomes of other species, it is necessary to use your own databases:
 * A list of known transcription factors (TF) for a species (don't write a header in the file)
 * A dataframe containing at least 4 columns: "Chromosome", "Gene_name", "Gene_start_bp" and "Gene_end_bp"
 * A dataframe containing 2 columns: "Chromosome" and "Seq_length"
