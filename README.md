@@ -186,4 +186,3 @@ df.genes <- gene.annotation(ensembldb.genetype, comparison)
 df.tf.targets <- targets.tf.enrichment(comparison, tf, organism)
 df.biopath <- enrich.biopathways(comparison)
 ```
-
