@@ -3,7 +3,11 @@
 # Alexandre BOULLE #
 ####################
 
-# Method to recover non-modified regions of the same size as modified regions
+
+#############################
+# KEEP NON-MODIFIED REGIONS #
+#############################
+
 
 #' @import stringr
 

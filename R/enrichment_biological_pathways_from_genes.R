@@ -3,6 +3,12 @@
 # Alexandre BOULLE #
 ####################
 
+
+#################################
+# BIOLOGICAL PATHWAY ENRICHMENT #
+#################################
+
+
 #' @import enrichR
 #' @import stringr
 

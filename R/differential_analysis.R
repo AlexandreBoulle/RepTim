@@ -3,7 +3,11 @@
 # Alexandre BOULLE #
 ####################
 
-# Methods of analysis for replication timing profiles
+
+#########################
+# DIFFERENTIAL ANALYSIS #
+#########################
+
 
 #' @import stringr
 #' @importFrom stats na.omit p.adjust quantile wilcox.test
@@ -273,11 +277,11 @@ fusion.common.regions <- function(df.differential){
 #' @param cond1 as the first condition
 #' @param cond2 as the second condition
 #' @param pvalue as the p-value threshold
-#' @param indice.decile as the positions for which we have a sufficient distance between conditions
+#' @param indice.detection as the positions for which we have a sufficient distance between conditions
 #' @param min.dist.euclid as the distance to stop the elongation of regions
-differential.analysis <- function(cond1, cond2, pvalue, indice.decile, min.dist.euclid, name){
+differential.analysis <- function(cond1, cond2, pvalue, indice.detection, min.dist.euclid, name){
   # STEP 1 : detect regions with differences between curves
-  df.diff.1 <- differential.analysis.1(condition1 = cond1[indice.decile, ], condition2 = cond2[indice.decile, ], threshold.pvalue = pvalue)
+  df.diff.1 <- differential.analysis.1(condition1 = cond1[indice.detection, ], condition2 = cond2[indice.detection, ], threshold.pvalue = pvalue)
   # percentage.1 <- percentage.difference(condition = cond1, df.differential = df.diff.1)
   # Check if different regions were detected
   if (dim(df.diff.1)[1] > 0){
@@ -449,21 +453,21 @@ files.startr.viewer <- function(condition1, condition2, condition1.loess, condit
 #' @param cond1.loess the first condition (values from loess smoothing)
 #' @param cond2.loess the second condition (values from loess smoothing)
 #' @param pval the p-value threshold
-#' @param max.q.dist the distance at which potential modified regions are detected
-#' @param min.q.dist the distance at which the elongation of the regions stops
+#' @param per.dist.detect the distance at which potential modified regions are detected (percentage between 0 and 100)
+#' @param per.dist.elong the distance at which the elongation of the regions stops (percentage between 0 and 100)
 #' @param comparison the name of comparison to build result folder
 #' @export
-modified.regions.detection <- function(list.cond, cond1, cond2, cond1.loess, cond2.loess, pval, max.q.dist, min.q.dist, comparison){
+modified.regions.detection <- function(list.cond, cond1, cond2, cond1.loess, cond2.loess, pval, per.dist.detect, per.dist.elong, comparison){
   dir.create(str_glue("Differential-Analysis_{comparison}/"))
   all.dist <- euclidean.distance.multiple.conditions(list.cond)
   dist.cond1.vs.cond2 <- euclidean.distance(condition1 = cond1, condition2 = cond2)
-  # ind.decile <- which(dist.cond1.vs.cond2 >= quantile(dist.cond1.vs.cond2, probs = seq(0.1, 1, by = 0.05))[str_glue("{max.q.dist}%")])
-  ind.decile <- which(dist.cond1.vs.cond2 >= quantile(all.dist, probs = seq(0, 1, by = 0.05))[str_glue("{max.q.dist}%")])
-  min.dist <- as.numeric(quantile(dist.cond1.vs.cond2, probs = seq(0.1, 1, by = 0.05))[str_glue("{min.q.dist}%")])
+  # ind.detect <- which(dist.cond1.vs.cond2 >= quantile(dist.cond1.vs.cond2, probs = seq(0.1, 1, by = 0.05))[str_glue("{per.dist.detect}%")])
+  ind.detect <- which(dist.cond1.vs.cond2 >= quantile(all.dist, probs = seq(0, 1, by = 0.05))[str_glue("{per.dist.detect}%")])
+  min.dist <- as.numeric(quantile(dist.cond1.vs.cond2, probs = seq(0.1, 1, by = 0.05))[str_glue("{per.dist.elong}%")])
   # Results of differential analysis performed between profiles
   results.diff <- differential.analysis(cond1 = cond1, cond2 = cond2,
                                         pvalue = pval,
-                                        indice.decile = ind.decile,
+                                        indice.detection = ind.detect,
                                         min.dist.euclid = min.dist,
                                         name = comparison)
   # Files to obtain profiles

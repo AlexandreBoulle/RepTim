@@ -7,7 +7,7 @@
 ## Presentation
 RepTim is an R package for fast (< 2 minutes with test datasets) and efficient DNA Replication Timing analysis.
 
-<div align="justify"> The package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect modified regions. Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched. It does also a Fisher's exact test to find transcription factors for wich more targets (genes) are found in the modified regions in comparison with non-modified regions. </div>
+<div align="justify"> The package aims to perform the differential analysis between replication timing profiles (biological conditions) in order to detect significantly modified regions. Then, it localizes genes in regions of interest (e.g. modified regions) and tests if biological pathways are enriched. It does also a Fisher's exact test to find transcription factors for wich more targets (genes) are found in the modified regions in comparison with non-modified regions. </div>
 
 
 &nbsp;
@@ -156,6 +156,12 @@ cond.loess.NA.late <- replicate.merging(list(cond1.loess.NA.late, cond2.loess.NA
 
 ### 6/8: Choose Thresholds
 
+**NOTE 1**: The variables "per.dist.detect" and "per.dist.elong" are values between 0 and 100 (= a percentage). \
+
+**NOTE 2**: If "per.dist.detect" is equal to 90% so it means we keep chromosome regions where the distance between profiles (curves) are in the 9th decile of the distance distribution (distances calculated between all replicates). \
+
+**NOTE 3**: If "per.dist.elong" is equal to 10% so it means we extend discovered regions as long as the distance between profiles is higher than the 1st decile.
+
 ```
 pval <- 1e-3
 per.dist.detect <- 90
@@ -174,7 +180,15 @@ cond2.loess <- cond.loess.NA.late
 
 ### 8/8: RepTim functions
 
-**NOTE**: Result folders are write directly in your directory.
+**NOTE 1**: Result folders are written directly in your directory. \
+
+**NOTE 2**: "Files_START-R_Viewer" folder contains ".SRV" files that can be loaded into the START-R Viewer shiny application in order to visualize result graphs (curve of Replication Timing profiles, annotations to see modified regions and their status "advanced" or "delayed"). \
+
+**NOTE 3**: To obtain more informations about parameters used in R functions, you can run this R command:
+
+```
+?modified.regions.detection
+```
 
 ```
 list.cond <- list(cond1.WT, cond2.WT, cond1.NA.early, cond2.NA.early, cond1.NA.late, cond2.NA.late)

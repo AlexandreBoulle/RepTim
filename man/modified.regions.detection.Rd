@@ -11,8 +11,8 @@ modified.regions.detection(
   cond1.loess,
   cond2.loess,
   pval,
-  max.q.dist,
-  min.q.dist,
+  per.dist.detect,
+  per.dist.elong,
   comparison
 )
 }
@@ -29,9 +29,9 @@ modified.regions.detection(
 
 \item{pval}{the p-value threshold}
 
-\item{max.q.dist}{the distance at which potential modified regions are detected}
+\item{per.dist.detect}{the distance at which potential modified regions are detected (percentage between 0 and 100)}
 
-\item{min.q.dist}{the distance at which the elongation of the regions stops}
+\item{per.dist.elong}{the distance at which the elongation of the regions stops (percentage between 0 and 100)}
 
 \item{comparison}{the name of comparison to build result folder}
 }
