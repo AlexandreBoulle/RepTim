@@ -182,7 +182,7 @@ cond2.loess <- cond.loess.NA.late
 
 **NOTE 1**: Result folders are written directly in your directory. \
 
-**NOTE 2**: "Files_START-R_Viewer" folder contains ".SRV" files that can be loaded into the START-R Viewer shiny application in order to visualize result graphs (curve of Replication Timing profiles, annotations to see modified regions and their status "advanced" or "delayed"). \
+**NOTE 2**: "Files_START-R_Viewer" folder contains ".SRV" files that can be loaded into the [START-R](https://github.com/thomasdenecker/START-R/tree/master) Viewer shiny application in order to visualize graphic results (curve of Replication Timing profiles, annotations to see modified regions and their status "advanced" or "delayed"). \
 
 **NOTE 3**: To obtain more informations about parameters used in R functions, you can run this R command:
 
