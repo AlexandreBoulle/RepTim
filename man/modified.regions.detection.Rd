@@ -13,7 +13,8 @@ modified.regions.detection(
   pval,
   per.dist.detect,
   per.dist.elong,
-  comparison
+  comparison,
+  chromosomes
 )
 }
 \arguments{
@@ -34,6 +35,8 @@ modified.regions.detection(
 \item{per.dist.elong}{the distance at which the elongation of the regions stops (percentage between 0 and 100)}
 
 \item{comparison}{the name of comparison to build result folder}
+
+\item{chromosomes}{the chromosomes studied for the organism of interest}
 }
 \description{
 Determine modified regions between conditions of interest

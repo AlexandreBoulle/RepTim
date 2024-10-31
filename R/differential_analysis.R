@@ -279,7 +279,9 @@ fusion.common.regions <- function(df.differential){
 #' @param pvalue as the p-value threshold
 #' @param indice.detection as the positions for which we have a sufficient distance between conditions
 #' @param min.dist.euclid as the distance to stop the elongation of regions
-differential.analysis <- function(cond1, cond2, pvalue, indice.detection, min.dist.euclid, name){
+#' @param name as the title of the condition comparison
+#' @param chromosomes as the chromosomes studied for the organism of interest
+differential.analysis <- function(cond1, cond2, pvalue, indice.detection, min.dist.euclid, name, chromosomes){
   # STEP 1 : detect regions with differences between curves
   df.diff.1 <- differential.analysis.1(condition1 = cond1[indice.detection, ], condition2 = cond2[indice.detection, ], threshold.pvalue = pvalue)
   # percentage.1 <- percentage.difference(condition = cond1, df.differential = df.diff.1)
@@ -302,7 +304,7 @@ differential.analysis <- function(cond1, cond2, pvalue, indice.detection, min.di
         # Adjust p-values with FDR method
         df.diff.unique.pval$ADJUSTED_PVALUE <- p.adjust(df.diff.unique.pval$PVALUE, method = "fdr")
         df.diff.final <- df.diff.unique.pval[df.diff.unique.pval$ADJUSTED_PVALUE < pvalue, ]
-        percentage.final <- percentage.difference(condition = cond1, df.differential = df.diff.unique)
+        percentage.final <- percentage.difference(condition = cond1, df.differential = df.diff.unique, chrs = chromosomes)
         dir.create(str_glue("Differential-Analysis_{comparison}/Modified_regions/"))
         write.table(df.diff.final, str_glue("Differential-Analysis_{name}/Modified_regions/Modified_regions_fdr-padj.txt"), col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t", append = T)
         write.table(percentage.final, str_glue("Differential-Analysis_{name}/Modified_regions/Differential_percentage.txt"), col.names = TRUE, row.names = FALSE, quote = FALSE, sep = "\t", append = T)
@@ -320,11 +322,12 @@ differential.analysis <- function(cond1, cond2, pvalue, indice.detection, min.di
 
 #' @param condition as a condition of the study allowing to recover chromosome positions
 #' @param df.differential as a dataframe containing positions of modified regions
-percentage.difference <- function(condition, df.differential){
+#' @param chrs as the chromosomes studied for the organism of interest
+percentage.difference <- function(condition, df.differential, chrs){
   size.genome <- 0
-  chrs <- c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9",
-            "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19",
-            "chr20", "chr21", "chr22", "chrX")
+  # chrs <- c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9",
+  #           "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19",
+  #           "chr20", "chr21", "chr22", "chrX")
   df.percent <- data.frame(Chromosome = character(length(chrs) + 1), Percentage = numeric(length(chrs) + 1))
   ind <- 1
   for (chr in chrs){
@@ -399,11 +402,12 @@ size.common.region <- function(differential.1, differential.2){
 #' @param condition2.loess the second condition (values from loess smoothing)
 #' @param df.differential as the result (dataframe) of differential analysis performed between two conditions
 #' @param name as the name of the comparison
-files.startr.viewer <- function(condition1, condition2, condition1.loess, condition2.loess, df.differential, name){
+#' @param chrs as the chromosomes studied for the organism of interest
+files.startr.viewer <- function(condition1, condition2, condition1.loess, condition2.loess, df.differential, name, chrs){
   dir.create(str_glue("Differential-Analysis_{name}/Files_START-R_Viewer/"))
-  chrs <- c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9",
-            "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19",
-            "chr20", "chr21", "chr22", "chrX")
+  # chrs <- c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9",
+  #           "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19",
+  #           "chr20", "chr21", "chr22", "chrX")
   for (chr in chrs){
     cond1.chr <- condition1[condition1$CHR == chr, ]
     cond2.chr <- condition2[condition2$CHR == chr, ]
@@ -456,8 +460,9 @@ files.startr.viewer <- function(condition1, condition2, condition1.loess, condit
 #' @param per.dist.detect the distance at which potential modified regions are detected (percentage between 0 and 100)
 #' @param per.dist.elong the distance at which the elongation of the regions stops (percentage between 0 and 100)
 #' @param comparison the name of comparison to build result folder
+#' @param chromosomes the chromosomes studied for the organism of interest
 #' @export
-modified.regions.detection <- function(list.cond, cond1, cond2, cond1.loess, cond2.loess, pval, per.dist.detect, per.dist.elong, comparison){
+modified.regions.detection <- function(list.cond, cond1, cond2, cond1.loess, cond2.loess, pval, per.dist.detect, per.dist.elong, comparison, chromosomes){
   dir.create(str_glue("Differential-Analysis_{comparison}/"))
   all.dist <- euclidean.distance.multiple.conditions(list.cond)
   dist.cond1.vs.cond2 <- euclidean.distance(condition1 = cond1, condition2 = cond2)
@@ -469,12 +474,13 @@ modified.regions.detection <- function(list.cond, cond1, cond2, cond1.loess, con
                                         pvalue = pval,
                                         indice.detection = ind.detect,
                                         min.dist.euclid = min.dist,
-                                        name = comparison)
+                                        name = comparison,
+                                        chromosomes)
   # Files to obtain profiles
   if (is.list(results.diff)){
     files.startr.viewer(condition1 = cond1, condition2 = cond2,
                         condition1.loess = cond1.loess, condition2.loess = cond2.loess,
-                        df.differential = results.diff[[1]], name = comparison)
+                        df.differential = results.diff[[1]], name = comparison, chrs = chromosomes)
   }
   return(results.diff)
 }
