@@ -15,6 +15,12 @@ RepTim is an R package for fast (< 2 minutes with test datasets) and efficient D
 
 ## Installation
 
+### Recommended : use directly Docker
+
+The using of a stable environment is described in the [r-env](https://github.com/AlexandreBoulle/r-env/) repository (specific R version available via RStudio).
+
+Then, you can install the package downloaded from GitHub.
+
 ### Installation with R commands
 
 Open an R console or RStudio and use this code:
@@ -53,10 +59,6 @@ install.packages("/your_path/Reptim.tar.gz", repo = NULL, type = "source")
 ```
 install.packages("/your_path/RepTim-main.tar.gz", repo = NULL, type = "source")
 ```
-
-#### Use directly Docker (recommended)
-
-The using of a stable environment is described in the [r-env](https://github.com/AlexandreBoulle/r-env/) repository (specific R version available via RStudio).
 
 
 &nbsp;
