@@ -54,6 +54,10 @@ install.packages("/your_path/Reptim.tar.gz", repo = NULL, type = "source")
 install.packages("/your_path/RepTim-main.tar.gz", repo = NULL, type = "source")
 ```
 
+#### Use directly Docker (recommended)
+
+The using of a stable environment is described in the [r-env](https://github.com/AlexandreBoulle/r-env/) repository (specific R version available via RStudio).
+
 
 &nbsp;
 
@@ -156,9 +160,9 @@ cond.loess.NA.late <- replicate.merging(list(cond1.loess.NA.late, cond2.loess.NA
 
 ### 6/8: Choose Thresholds
 
-**NOTE 1**: The variables "per.dist.detect" and "per.dist.elong" are values between 0 and 100 (= a percentage). \
+**NOTE 1**: The variables "per.dist.detect" and "per.dist.elong" are values between 0 and 100 (= a percentage).
 
-**NOTE 2**: If "per.dist.detect" is equal to 90% so it means we keep chromosome regions where the distance between profiles (curves) are in the 9th decile of the distance distribution (distances calculated between all replicates). \
+**NOTE 2**: If "per.dist.detect" is equal to 90% so it means we keep chromosome regions where the distance between profiles (curves) are in the 9th decile of the distance distribution (distances calculated between all replicates).
 
 **NOTE 3**: If "per.dist.elong" is equal to 10% so it means we extend discovered regions as long as the distance between profiles is higher than the 1st decile.
 
@@ -180,9 +184,9 @@ cond2.loess <- cond.loess.NA.late
 
 ### 8/8: RepTim functions
 
-**NOTE 1**: Result folders are written directly in your directory. \
+**NOTE 1**: Result folders are written directly in your directory.
 
-**NOTE 2**: "Files_START-R_Viewer" folder contains ".SRV" files that can be loaded into the [START-R](https://github.com/thomasdenecker/START-R/tree/master) Viewer shiny application in order to visualize graphic results (curve of Replication Timing profiles, annotations to see modified regions and their status "advanced" or "delayed"). \
+**NOTE 2**: "Files_START-R_Viewer" folder contains ".SRV" files that can be loaded into the [START-R](https://github.com/thomasdenecker/START-R/tree/master) Viewer shiny application in order to visualize graphic results (curve of Replication Timing profiles, annotations to see modified regions and their status "advanced" or "delayed").
 
 **NOTE 3**: To obtain more informations about parameters used in R functions, you can run this R command:
 
