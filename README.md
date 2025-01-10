@@ -200,7 +200,12 @@ cond2.loess <- cond.loess.NA.late
 list.cond <- list(cond1.WT, cond2.WT, cond1.NA.early, cond2.NA.early, cond1.NA.late, cond2.NA.late)
 comparison <- "WT_vs_NA-late_pval-1e-3_dist-detect-90_dist-elong-10"
 
-res <- modified.regions.detection(list.cond, cond1, cond2, cond1.loess, cond2.loess, pval, per.dist.detect, per.dist.elong, comparison)
+chromosomes <- c("chr1", "chr2", "chr3", "chr4", "chr5", "chr6", "chr7", "chr8", "chr9",
+                 "chr10", "chr11", "chr12", "chr13", "chr14", "chr15", "chr16", "chr17", "chr18", "chr19",
+                 "chr20", "chr21", "chr22", "chrX")
+
+res <- modified.regions.detection(list.cond, cond1, cond2, cond1.loess, cond2.loess, pval, 
+                                  per.dist.detect, per.dist.elong, comparison, chromosomes)
 df.nmregions <- non.modified.regions(res[[1]], size.chr.table, comparison)
 df.genes <- gene.annotation(ensembldb.genetype, comparison)
 df.tf.targets <- targets.tf.enrichment(comparison, tf, organism)
